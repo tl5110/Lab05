@@ -1,12 +1,11 @@
 package simulation;
 
-import java.io.FileNotFoundException;
-import java.util.Random;
 import java.util.*;
+import java.lang.Math;
 import java.io.File;
+import java.util.Random;
+import java.io.FileNotFoundException;
 import java.util.stream.Collectors;
-import java.util.TreeSet;
-
 
 public class DanceMarathon {
     private final HashMap<Song,Integer> jukebox = new HashMap<>();
@@ -15,14 +14,17 @@ public class DanceMarathon {
 
     public DanceMarathon(String filename) throws FileNotFoundException {
         Scanner tracks = new Scanner(new File(filename));
-        System.out.println("Loading the jukebox with songs:" +
-                "\n\tReading songs from " + filename + " into jukebox...");
+
+        System.out.println("Loading the jukebox with songs:");
+        System.out.println("\tReading songs from " + filename + " into jukebox...");
+
         while(tracks.hasNext()){
             String[] oneSong = tracks.nextLine().split("<SEP>");
             Song song = new Song(oneSong[2], oneSong[3]);
             this.jukebox.put(song, 0);
         }
         this.playlist.addAll(jukebox.keySet());
+
         System.out.println("\tJukebox is loaded with " + jukebox.size() + " songs");
         System.out.println("\tFirst song in jukebox: " + playlist.get(0));
         System.out.println("\tLast song in jukebox: " + playlist.get(playlist.size()-1));
@@ -35,7 +37,9 @@ public class DanceMarathon {
         for(int i = 0; i < 100000; i++){
             HashSet<Song> replay = new HashSet<>();
             Song a = playlist.get(songIndex.nextInt(playlist.size()));
+//            replay.stream().forEach(song -> song.equals(a));
             while(!replay.contains(a)){
+//                five.stream().limit(5).collect(Collectors.toList((ArrayList::add(a))));
                 if(five.size()!=5){
                     five.add(a);
                 }
@@ -45,19 +49,20 @@ public class DanceMarathon {
             }
         }
         long endTime = System.currentTimeMillis();
-        int totalTime = (int)(endTime - startTime);
+        int totalTime = (int)(endTime - startTime) / 1000;
         System.out.println("\tPrinting first 5 songs played...");
         five.forEach(song -> System.out.println("\t\t" + song));
-        System.out.println("\tSimulation took: " + totalTime + " second/s to run");
+        System.out.println("\tSimulation took " + totalTime + " second/s to run");
     }
 
     public void statistics(){
         int totalPlays = jukebox.values().stream().reduce(0, Integer::sum);
-        int avgPlays = (totalPlays/100000);
+        int avgPlays = (int) Math.ceil((double)totalPlays/100000);
         Song mostPlayed = Collections.max(jukebox.entrySet(), HashMap.Entry.comparingByValue()).getKey();
         TreeSet<Song> topArtist = jukebox.keySet().stream().
                 filter(song -> song.getArtist().equals(mostPlayed.getArtist())).
                 collect(Collectors.toCollection(TreeSet::new));
+
         System.out.println("Displaying simulation statistics:");
         System.out.println("\tNumber of simulations run: 100000");
         System.out.println("\tTotal number of songs played: " + totalPlays);
