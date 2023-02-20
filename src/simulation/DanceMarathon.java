@@ -35,9 +35,9 @@ public class DanceMarathon {
      * the jukebox that keeps track of how
      * many times each song has been played
      */
-    private final HashMap<Song,Integer> jukebox = new HashMap<>();
+    private final static HashMap<Song,Integer> jukebox = new HashMap<>();
     /** the list of all the songs in the jukebox */
-    private final List<Song> playlist = new ArrayList<>();
+    private final static List<Song> playlist = new ArrayList<>();
 
     /**
      * Reads the data file of songs and loads them all into the jukebox.
@@ -55,9 +55,9 @@ public class DanceMarathon {
         while(tracks.hasNext()){
             String[] oneSong = tracks.nextLine().split("<SEP>");
             Song song = new Song(oneSong[2], oneSong[3]);
-            this.jukebox.put(song, 0);
+            jukebox.put(song, 0);
         }
-        this.playlist.addAll(jukebox.keySet());
+        playlist.addAll(jukebox.keySet());
 
         System.out.println("\tJukebox is loaded with " + jukebox.size() + " songs");
         System.out.println("\tFirst song in jukebox: " + playlist.get(0));
