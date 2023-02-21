@@ -65,7 +65,7 @@ public class DanceMarathon {
     }
 
     /**
-     * Randomly accesses songs in the jukebox.
+     * Randomly accesses/play songs in the jukebox.
      * If a song is played its value of plays in the jukebox increases
      * and is continuously added to hash-set until a song has been replayed.
      * This process is repeated 100,000 times.
@@ -97,12 +97,14 @@ public class DanceMarathon {
     }
 
     /**
-     * Determines and displays the number of simulation runs,
-     * total number of songs played throughout the simulation,
-     * average amount of plays it took to get a duplicate across
-     * the entire simulation, finds the most played song,and all
-     * the other songs, and amount of time they are played, by
-     * the artist of the most played song in alphabetical order.
+     * Generates and prints the following statistics about the simulation run
+     *      1. Number of simulation runs
+     *      2. Total number of songs played throughout the simulation
+     *      3. Average amount of plays it took to get a duplicate across
+     *      the entire simulation
+     *      4. The most played song,
+     *      5. All the other songs, and amount of time they are played, by
+     *      the artist of the most played song in alphabetical order
      */
     public void statistics(){
         int totalPlays = jukebox.values().stream().reduce(0, Integer::sum);
