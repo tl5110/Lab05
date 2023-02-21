@@ -107,18 +107,18 @@ public class DanceMarathon {
     public void statistics(){
         int totalPlays = jukebox.values().stream().reduce(0, Integer::sum);
         int avgPlays = (int) Math.ceil((double)totalPlays/100000);
-        Song mostPlayed = Collections.max(jukebox.entrySet(), HashMap.Entry.comparingByValue()).getKey();
-        TreeSet<Song> topArtist = jukebox.keySet().stream().
-                filter(song -> song.getArtist().equals(mostPlayed.getArtist())).
-                collect(Collectors.toCollection(TreeSet::new));
+        Song mostPlayed = Collections.max(jukebox.entrySet(), HashMap.Entry.comparingByValue())
+                .getKey();
+        TreeSet<Song> topArtist = jukebox.keySet().stream()
+                .filter(song -> song.getArtist().equals(mostPlayed.getArtist()))
+                .collect(Collectors.toCollection(TreeSet::new));
 
         System.out.println("Displaying simulation statistics:");
         System.out.println("\tNumber of simulations run: 100000");
         System.out.println("\tTotal number of songs played: " + totalPlays);
         System.out.println("\tAverage number of songs played per simulation to get duplicate: " + avgPlays);
-        System.out.println("\tMost played song: \""
-                + mostPlayed.getTitle() + "\" by \""
-                + mostPlayed.getArtist() + "\"");
+        System.out.println("\tMost played song: \"" + mostPlayed.getTitle()
+                + "\" by \"" + mostPlayed.getArtist() + "\"");
         System.out.println("\tAll songs alphabetically by \"" + mostPlayed.getArtist() +"\":");
         topArtist.forEach(song -> System.out.println("\t\t\"" + song.getTitle()
                 + "\" with " + jukebox.get(song) + " plays"));
